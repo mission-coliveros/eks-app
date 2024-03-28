@@ -1,7 +1,7 @@
 locals {
   resource_prefix = "${var.org_name}-${var.stack_name}-${terraform.workspace}"
 
-  global_variables = yamldecode(file("../../global_variables.yaml"))
+  global_variables = yamldecode(file("../../../global_variables.yaml"))
   shared_variables = data.terraform_remote_state.shared.outputs["shared_variables"]
 
   network      = data.terraform_remote_state.product["network"].outputs
@@ -15,7 +15,7 @@ locals {
 # ----------------------------------------------------------------------------------------------------------------------
 
 module "activemq" {
-  source = "../../modules/activemq"
+  source = "../../../modules/activemq"
 
   resource_prefix                  = local.resource_prefix
   security_groups                  = [local.network["security_group_ids"]["activemq_broker"]]
@@ -28,7 +28,7 @@ module "activemq" {
 # ----------------------------------------------------------------------------------------------------------------------
 
 module "psql_database" {
-  source = "../../modules/aurora_cluster"
+  source = "../../../modules/aurora_cluster"
 
   cluster_name = "${local.resource_prefix}-psql"
   # cluster_engine_full_version = "8.0.mysql_aurora.3.04.0"
@@ -48,7 +48,7 @@ module "psql_database" {
 # ----------------------------------------------------------------------------------------------------------------------
 
 module "elasticache_redis" {
-  source = "../../modules/elasticache_redis"
+  source = "../../../modules/elasticache_redis"
 
   # Base
   resource_prefix = local.resource_prefix
@@ -79,7 +79,7 @@ module "merged_zfs_volumes" {
 }
 
 module "openzfs_filesystem" {
-  source = "../../modules/openzfs_filesystem"
+  source = "../../../modules/openzfs_filesystem"
 
   filesystem_storage_capacity = 100
   resource_prefix = local.resource_prefix

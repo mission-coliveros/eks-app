@@ -1,7 +1,7 @@
 locals {
   resource_prefix             = "${var.org_name}-${var.stack_name}-${terraform.workspace}"
 
-  global_variables = yamldecode(file("../../global_variables.yaml"))
+  global_variables = yamldecode(file("../../../global_variables.yaml"))
   shared_variables = data.terraform_remote_state.shared.outputs["shared_variables"]
 }
 
@@ -11,7 +11,7 @@ data "aws_iam_role" "autoscaling_service" {
 
 module "kms" {
   # Default keys: [cloudtrail, ebs, efs, glue, logs, rds, s3, systems-manager, secrets-manager, sns, ses, sqs]
-  source = "../../modules/kms_key_suite"
+  source = "../../../modules/kms_key_suite"
 
   environment_name               = terraform.workspace
   autoscaling_service_role_arn   = data.aws_iam_role.autoscaling_service.arn
