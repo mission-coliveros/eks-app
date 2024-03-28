@@ -1,0 +1,1 @@
+shared, core, network, security_group_rules, datastores, compute, eks_init

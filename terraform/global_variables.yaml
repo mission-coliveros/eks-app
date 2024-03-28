@@ -1,0 +1,4 @@
+terraform_state:
+  bucket_name: cmoliveros-terraform-state
+  primary_region: us-west-2
+  backup_region: us-west-2

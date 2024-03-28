@@ -1,0 +1,32 @@
+{
+  "sid": "Allow access for all principals authorized to use services in `viaService` list",
+  "effect": "Allow",
+  "principals": [
+    {
+      "type": "AWS",
+      "identifiers": ["*"]
+    }
+  ],
+  "action": [
+    "kms:Encrypt",
+    "kms:Decrypt",
+    "kms:ReEncrypt*",
+    "kms:GenerateDataKey*",
+    "kms:CreateGrant",
+    "kms:ListGrants",
+    "kms:DescribeKey"
+  ],
+  "resource": "*",
+  "conditions": [
+    {
+      "test": "StringEquals",
+      "variable": "kms:ViaService",
+      "values": ${allowed_services}
+    },
+    {
+      "test": "StringEquals",
+      "variable": "kms:CallerAccount",
+      "values": ${allowed_accounts}
+    }
+  ]
+}

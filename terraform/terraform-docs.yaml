@@ -1,0 +1,11 @@
+formatter: "markdown"
+
+output:
+  mode: inject
+
+settings:
+  lockfile: false
+
+sort:
+  enabled: true
+  by: name
