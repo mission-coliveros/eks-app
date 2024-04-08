@@ -4,11 +4,11 @@ provider "aws" {
 
   default_tags {
     tags = {
-      environment       = terraform.workspace
-      stack_name        = var.stack_name
-      region            = var.aws_region
-      terraform_config  = "compute"
-      system_name       = "${local.resource_prefix}-${var.aws_region}"
+      environment      = terraform.workspace
+      stack_name       = var.stack_name
+      region           = var.aws_region
+      terraform_config = "compute"
+      system_name      = "${local.resource_prefix}-${var.aws_region}"
     }
   }
 

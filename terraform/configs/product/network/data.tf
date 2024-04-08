@@ -7,7 +7,7 @@ data "terraform_remote_state" "shared" {
   config = {
     region = local.global_variables["terraform_state"]["primary_region"]
     bucket = local.global_variables["terraform_state"]["bucket_name"]
-    key    = "shared-services/prod/terraform.tfstate"
+    key    = "shared-services/prod/main.tfstate"
   }
 }
 

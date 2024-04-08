@@ -1,3 +1,7 @@
+locals {
+  # enabled_keys = { for k, v in module.merged_kms_key_specs.merged : k => v if v["create"] }
+}
+
 module "kms" {
   for_each = module.merged_kms_key_specs.merged
   source   = "terraform-aws-modules/kms/aws"

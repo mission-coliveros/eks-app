@@ -3,8 +3,9 @@
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "org_name" {
-  type    = string
-  default = "cmoliveros"
+  description = "Organization name, used in resource prefixes"
+  type        = string
+  default     = "cmoliveros"
 }
 
 variable "stack_name" {
@@ -41,13 +42,13 @@ variable "security_group_overrides" {
 }
 
 variable "single_nat_gateway" {
-  description = ""
+  description = "Enable/disable single NAT gateway for all AZs"
   type        = bool
   default     = false
 }
 
 variable "enable_flow_log" {
-  description = ""
+  description = "Enable/disable VPC flow logs"
   type        = bool
   default     = true
 }

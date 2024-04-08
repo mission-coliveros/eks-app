@@ -3,8 +3,9 @@
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "org_name" {
-  type = string
-  default = "cmoliveros"
+  description = "Organization name, used in resource prefixes"
+  type        = string
+  default     = "cmoliveros"
 }
 
 variable "stack_name" {

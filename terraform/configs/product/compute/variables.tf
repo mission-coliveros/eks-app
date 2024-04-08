@@ -3,8 +3,9 @@
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "org_name" {
-  type = string
-  default = "cmoliveros"
+  description = "Organization name, used in resource prefixes"
+  type        = string
+  default     = "cmoliveros"
 }
 
 variable "stack_name" {
@@ -31,28 +32,19 @@ variable "availability_zones" {
 }
 
 variable "active_availability_zones" {
-  type = number
-  default = null
+  description = "Used to limit the amount of AZs used to deploy the cluster to"
+  type        = number
+  default     = null
 }
 
-variable "default_ec2_instance_type" {
-  description = "Default instance types to deploy EC2 instances as"
-  type        = string
-  default     = "m7i.large"
-}
-
-variable "cluster_deployed" {
-  default = true
-}
+#variable "default_ec2_instance_type" {
+#  description = "Default instance types to deploy EC2 instances as"
+#  type        = string
+#  default     = "m7i.large"
+#}
 
 variable "eks_cluster_version" {
-  description = ""
+  description = "EKS version of the cluster"
   type        = string
   default     = "1.29"
-}
-
-variable "eks_cluster_name_override" {
-  description = ""
-  type        = string
-  default     = null
 }

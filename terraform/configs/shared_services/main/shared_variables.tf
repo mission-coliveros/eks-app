@@ -1,9 +1,11 @@
 locals {
   shared_variables = {
     aws_accounts = {
-      sandbox = {
-        aws_account_id = "361464906264"
-        active_regions = ["us-west-2"]
+      product = {
+        prod = {
+          aws_account_id = "361464906264"
+          active_regions = ["us-west-2"]
+        }
       }
     }
 

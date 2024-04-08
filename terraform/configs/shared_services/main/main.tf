@@ -1,5 +1,5 @@
 locals {
-  global_variables = yamldecode(file("../../global_variables.yaml"))
+  global_variables = yamldecode(file("../../../global_variables.yaml"))
   resource_prefix  = "${var.org_name}-${var.stack_name}-${terraform.workspace}"
 }
 
@@ -8,14 +8,14 @@ locals {
 # ----------------------------------------------------------------------------------------------------------------------
 
 module "terraform_backend" {
-  source    = "../../modules/central_terraform_state"
+  source    = "../../../modules/central_terraform_state"
   providers = { aws.backup = aws.backup }
 
   aws_backup_region = var.aws_backup_region
   bucket_name       = local.global_variables["terraform_state"]["bucket_name"]
   environment_name  = terraform.workspace
   resource_prefix   = local.resource_prefix
-  spoke_accounts    = local.shared_variables.aws_accounts
+  spoke_accounts    = {}
 }
 
 # ----------------------------------------------------------------------------------------------------------------------

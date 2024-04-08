@@ -1,11 +1,11 @@
 terraform {
-  required_version = ">= 1.5"
+  required_version = ">= 1.7"
 
   backend "s3" {
     region               = "us-west-2"
     bucket               = "cmoliveros-terraform-state"
     workspace_key_prefix = "shared-services"
-    key                  = "terraform.tfstate"
+    key                  = "main.tfstate"
     encrypt              = true
     dynamodb_table       = "terraform-state-lock"
   }
@@ -13,7 +13,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.39"
+      version = "~> 5.43"
     }
   }
 

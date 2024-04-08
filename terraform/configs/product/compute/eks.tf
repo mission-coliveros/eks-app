@@ -1,5 +1,4 @@
 locals {
-  cluster_name              = coalesce(var.eks_cluster_name_override, local.resource_prefix)
   active_availability_zones = var.active_availability_zones != null ? var.active_availability_zones : length(var.availability_zones)
 }
 
@@ -8,7 +7,7 @@ module "eks_cluster" {
   version = "~> 20.8.3"
 
   cluster_version = var.eks_cluster_version
-  cluster_name    = local.cluster_name
+  cluster_name    = local.resource_prefix
 
   # Network
   vpc_id                         = local.network["vpc_id"]
@@ -22,21 +21,23 @@ module "eks_cluster" {
   create_node_security_group                   = false
   node_security_group_enable_recommended_rules = false
 
+  cloudwatch_log_group_kms_key_id = local.kms_key_arns["logs"]
+
   fargate_profiles = {
     karpenter = {
-      iam_role_name            = "${local.cluster_name}-fargate-profile-karpenter"
+      iam_role_name            = "${local.resource_prefix}-fargate-profile-karpenter"
       iam_role_use_name_prefix = false
       selectors                = [{ namespace = "karpenter" }]
     }
     kube-system = {
-      iam_role_name            = "${local.cluster_name}-fargate-profile-kube-system"
+      iam_role_name            = "${local.resource_prefix}-fargate-profile-kube-system"
       iam_role_use_name_prefix = false
       selectors                = [{ namespace = "kube-system" }]
     }
   }
 
   tags = {
-    "karpenter.sh/discovery" = local.cluster_name
+    "karpenter.sh/discovery" = local.resource_prefix
     "terraform:module"       = "eks_cluster"
   }
 }
@@ -67,10 +68,10 @@ module "eks_roles" {
   source  = "aws-ia/eks-blueprints-addons/aws"
   version = "~> 1.16.0"
 
-  cluster_name                = module.eks_cluster.cluster_name
-  cluster_version             = var.eks_cluster_version
-  cluster_endpoint            = module.eks_cluster.cluster_endpoint
-  oidc_provider_arn           = module.eks_cluster.oidc_provider_arn
+  cluster_name      = module.eks_cluster.cluster_name
+  cluster_version   = var.eks_cluster_version
+  cluster_endpoint  = module.eks_cluster.cluster_endpoint
+  oidc_provider_arn = module.eks_cluster.oidc_provider_arn
 
   # --------------------------------------------------------------------------------------------------------------------
   # Karpenter

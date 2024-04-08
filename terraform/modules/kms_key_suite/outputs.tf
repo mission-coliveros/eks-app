@@ -10,5 +10,9 @@ output "key_arns" {
 
 output "key_aliases" {
   description = "Map of KMS key Aliases. Default keys: [cloudtrail, ebs, efs, elasticache, glue, logs, rds, s3, systems-manager, secrets-manager, sns, ses, sqs]"
-  value       = zipmap(keys(module.kms), [for k, v in module.kms : v.aliases])
+  value = zipmap(
+    keys(module.kms),
+    [for k, v in module.kms : try(v.aliases["${var.environment_name}/${k}"]["name"], null)
+    ]
+  )
 }
